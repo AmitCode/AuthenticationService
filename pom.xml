@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.goto.hibernate</groupId>
-	<artifactId>TheRetailersHub</artifactId>
+	<artifactId>AuthenticationService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>HibernateTutorial</name>
 	<description>Project for Hibernate Tutorial</description>
