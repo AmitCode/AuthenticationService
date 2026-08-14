@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.*;
 public class RetailerAuthentication {
 
     //@Autowired
-    private final AuthService authService;
+    //private final AuthService authService;
     private final AuthenticationManager authManager;
     private final JWTUtils jwtUtils;
     private final OtpService otpService;
 
     public RetailerAuthentication(AuthService authService, AuthenticationManager authManager,
                                   JWTUtils jwtUtils, OtpService otpService) {
-        this.authService = authService;
+        //this.authService = authService;
         this.authManager = authManager;
         this.jwtUtils = jwtUtils;
         this.otpService = otpService;
@@ -43,6 +43,7 @@ public class RetailerAuthentication {
         response.setStatusCode(String.valueOf(HttpStatus.OK));
         response.setIsLoginSuccess("Y");
         response.setLoginMessage(jwtUtils.generateJwtToken(userLoginRequest.getUserName()));
+
         return ResponseEntity.ok(response);
      }
 

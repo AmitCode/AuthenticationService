@@ -52,5 +52,8 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    private boolean duplicateLoginCheck(){
 
+        return true;
+    }
 }

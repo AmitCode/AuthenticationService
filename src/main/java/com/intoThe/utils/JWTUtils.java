@@ -4,6 +4,7 @@ import com.intoThe.exceptions.SuppliersOprException.JwtTokenGenerationException;
 import com.intoThe.exceptions.SuppliersOprException.JwtTokenValidationException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -18,6 +19,9 @@ public class JWTUtils {
             token = Jwts.builder()
                     .setSubject(userName)
                     .setIssuedAt(new Date())
+                    .setExpiration(new Date(System.currentTimeMillis() + 1000 + 60 + 60)) // This sets expiration
+                    // time for the token. This token will become invalid after a fixed duration.
+                    //.setClaims("userName" , userName)
                     .signWith(secreteKey)
                     .compact();
         }catch (Exception exception){
