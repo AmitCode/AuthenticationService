@@ -182,7 +182,10 @@ public ResponseEntity<?> addUser(UserDTO userDTO) {
         try {
 
             userDTO.setUserPassword(passwordEncoder.encode(userDTO.getUserPassword()));
-            Users newUser = userRepository.save(UserDataModelMapper.mapToUser(userDTO));
+
+            Users mappedUser = UserDataModelMapper.mapToUser(userDTO);
+            mappedUser.setCreatedBy(userDTO.getUserName());
+            Users newUser = userRepository.save(mappedUser);
 
             String token = VerificationTokenUtils.generateVerificationToken();
             String hashToken = HashUtils.getSHA256Hash(token);
@@ -229,6 +232,7 @@ public ResponseEntity<?> addUser(UserDTO userDTO) {
         users.setUserName(userDTO.getUserName());
         users.setIsUserActive(userDTO.getIsUserActive());
         users.setPassword(userDTO.getUserPassword());
+        users.setUpdatedBy(userName);
         users = userRepository.save(users);
 
         return UserDataModelMapper.mapToUserDTO(users);
@@ -277,6 +281,7 @@ public ResponseEntity<?> addUser(UserDTO userDTO) {
     public ResponseEntity<AuthenticationServiceResponse> activateOrDeactivate(String userName, Boolean isActive) {
         Users users = UserUtils.isUserExist(userName,userRepository);
         users.setIsUserActive(isActive);
+        users.setUpdatedBy(userName);
 
         ResponseEntity<AuthenticationServiceResponse> authenticationServiceResponse = WebClientServices
                 .callUserServiceActiveAndDeActivate("/activateOrDeactivateUser", userName, isActive, userServiceWebClient);
@@ -379,7 +384,8 @@ public ResponseEntity<?> addUser(UserDTO userDTO) {
             if(isPasswordMatched)
                 throw new InvalidCredentials("Old password is wrong!...");
 
-            String sqlScript = "UPDATE INTO_USER_DATA SET PASSWORD = ?  WHERE USER_ID = ?";
+            String sqlScript = "UPDATE INTO_USER_DATA SET PASSWORD = ?, UPDATED_BY = "
+            + users.getUserName() + "WHERE USER_ID = ?";
             Query query = entityManager.createNativeQuery(sqlScript);
             entityManager.setProperty(passwordEncoder.encode(passwordResetRequest.getNewPassword()),
                     users.getUserId());
