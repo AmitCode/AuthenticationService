@@ -1,22 +1,16 @@
 package com.intoThe.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "INTO_USER_DATA")
 @AllArgsConstructor
 @Getter
 @Setter
-public class Users extends BaseEntity{
+public class Users extends BaseAuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
