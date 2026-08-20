@@ -225,17 +225,16 @@ public ResponseEntity<?> addUser(UserDTO userDTO) {
      */
     @Transactional
     @Override
-    public UserDTO updateUser(UserDTO userDTO){
+    public String updateUser(UserDTO userDTO){
 
         String userName = userDTO.getUserName();
         Users users = UserUtils.isUserExist(userName,userRepository);
         users.setUserName(userDTO.getUserName());
         users.setIsUserActive(userDTO.getIsUserActive());
-        users.setPassword(userDTO.getUserPassword());
         users.setUpdatedBy(userName);
         users = userRepository.save(users);
 
-        return UserDataModelMapper.mapToUserDTO(users);
+        return "User update operation completed successfully.";
     }
 
     /**

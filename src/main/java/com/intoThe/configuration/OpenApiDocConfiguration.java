@@ -1,0 +1,55 @@
+package com.intoThe.configuration;
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.servers.Server;
+import io.swagger.v3.oas.annotations.servers.ServerVariable;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Authentication Service API",
+                version = "Dev1.0",
+                summary = "Authentication, initial user, and role management APIs",
+                description = """
+                Provides REST APIs for user authentication, initial user registration and profile management,
+                and role management. The service supports user authentication, JWT access token generation
+                and refresh, and authentication-protected operations requiring a valid JWT Bearer token.
+                """
+        ),
+        servers = @Server(
+//                url = "https://{environment}.example.com/authService",
+                url = "http://localhost:8089/authService",
+                description = "Authentication Service",
+                variables = {
+                        @ServerVariable(
+                                name = "environment",
+                                defaultValue = "dev",
+                                allowableValues = {"local", "dev", "qa", "prod"}
+                        )
+                }
+        ),
+
+        tags = {
+                @Tag(
+                        name = "Authentication Management APIs",
+                        description = "APIs for managing user authentication"
+                ),
+                @Tag(
+                        name = "User Management APIs",
+                        description = "APIs for managing users"
+                ),
+                @Tag(
+                        name = "Token Management APIs",
+                        description = "APIs for managing tokens"
+                ),
+                @Tag(
+                        name = "Otp Management APIs",
+                        description = "APIs for managing otp"
+                )
+        }
+)
+public class OpenApiDocConfiguration {
+}

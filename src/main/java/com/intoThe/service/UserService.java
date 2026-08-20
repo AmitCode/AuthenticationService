@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService {
     public ResponseEntity<?> addUser(UserDTO userDTO);
-    public UserDTO updateUser(UserDTO userDTO);
+    public String updateUser(UserDTO userDTO);
     public ResponseEntity<AuthenticationServiceResponse> deleteUser(String userName);
     public ResponseEntity<AuthenticationServiceResponse> activateOrDeactivate(String userName, Boolean isActive);
     public UserDTO getUserInfo(String userName);

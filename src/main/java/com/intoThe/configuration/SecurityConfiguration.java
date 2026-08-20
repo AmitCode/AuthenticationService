@@ -26,7 +26,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/auth/login", "/auth/register", "/userService/createNewUser",
                                         "/verify/verifyUserAccount", "/userService/forgot-password-request"
-                                        ,"/otpService/generateOtp", "/otpService/validateOtp").permitAll()
+                                        ,"/otpService/generateOtp", "/otpService/validateOtp", "/swagger-ui/**",
+                                        "/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

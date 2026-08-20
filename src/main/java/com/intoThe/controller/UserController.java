@@ -4,10 +4,12 @@ import com.intoThe.dto.UserDTO;
 import com.intoThe.dto.request.PasswordResetRequest;
 import com.intoThe.dto.response.AuthenticationServiceResponse;
 import com.intoThe.service.impl.UserServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,12 @@ import java.awt.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/userService")
+@RequestMapping(path = "/userService", produces = MediaType.APPLICATION_JSON_VALUE)
+//@Tag(
+//        name = "User Management APIs",
+//        description = "APIs for managing users"
+//)
+@Tag(name = "User Management APIs")
 public class UserController {
     //@Autowired
     private final UserServiceImpl userService;
@@ -44,7 +51,7 @@ public class UserController {
      *         with an HTTP status of {@link HttpStatus#ACCEPTED}.
      */
     @PutMapping("/updateUser")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<String> updateUser(@RequestBody UserDTO userDTO){
         return new ResponseEntity<>(userService.updateUser(userDTO), HttpStatus.ACCEPTED);
     }
 

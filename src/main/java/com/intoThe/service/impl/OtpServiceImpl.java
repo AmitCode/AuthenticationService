@@ -85,13 +85,18 @@ public class OtpServiceImpl implements OtpService {
     @Transactional
     @Override
     public ResponseEntity<OtpServiceResponse> generateOtp(String email){
+
         OtpServiceResponse otpServiceResponse;
         String otp = "";
-        otpRepository.
-                findByUserEmailAndIsValidAndIsVerified(email, true, false)
-                .orElseThrow(()-> new OtpValidationException("Otp already present, Please check your SMS!"));
+        Optional<OtpEntity> optionalOtp;
 
-        Optional<OtpEntity> optionalOtp = otpRepository.
+        optionalOtp = otpRepository.
+                findByUserEmailAndIsValidAndIsVerified(email, true, false);
+        if(optionalOtp.isPresent()){
+            throw new OtpValidationException("Otp already present, Please check your SMS!");
+        }
+
+        optionalOtp = otpRepository.
                 findByUserEmailAndIsValidAndIsVerified(email, false, true);
 
         if(optionalOtp.isPresent()){
