@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
         ),
         servers = @Server(
 //                url = "https://{environment}.example.com/authService",
-                url = "http://localhost:8089/authService",
+                url = "${notificationServiceBaseUrl}" + "${server.servlet.context-path}",
                 description = "Authentication Service",
                 variables = {
                         @ServerVariable(

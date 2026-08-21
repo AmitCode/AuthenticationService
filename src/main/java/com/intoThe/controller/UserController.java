@@ -4,6 +4,7 @@ import com.intoThe.dto.UserDTO;
 import com.intoThe.dto.request.PasswordResetRequest;
 import com.intoThe.dto.response.AuthenticationServiceResponse;
 import com.intoThe.service.impl.UserServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -37,6 +38,11 @@ public class UserController {
      * @param userDTO The user data to be created.
      * @return A string indicating that the user was successfully created.
      */
+    @Operation(
+            summary = "Register a new user",
+            description = "Registers a new user using the provided username, email address, and password. " +
+                    "Upon successful registration, a verification link is sent to the user's email address."
+    )
     @PostMapping("/createNewUser")
     public ResponseEntity<?> createNewUser(@Valid  @RequestBody UserDTO userDTO){
         return userService.addUser(userDTO);
