@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
         info = @Info(
                 title = "Authentication Service API",
-                version = "Dev1.0",
+                version = "AuthDev1.0",
                 summary = "Authentication, initial user, and role management APIs",
                 description = """
                 Provides REST APIs for user authentication, initial user registration and profile management,
