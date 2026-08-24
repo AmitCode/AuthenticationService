@@ -1,6 +1,7 @@
 package com.intoThe.mapper;
 
 import com.intoThe.dto.UserDTO;
+import com.intoThe.dto.request.UserRegistrationRequest;
 import com.intoThe.entities.Users;
 
 import java.util.ArrayList;
@@ -72,4 +73,23 @@ public class UserDataModelMapper {
         }
         return userDTOS;
     }
+
+    public static Users mapToUser(UserRegistrationRequest registrationRequest){
+
+        Users users = new Users();
+        users.setUserName(registrationRequest.getUserName());
+        users.setPassword(registrationRequest.getUserPassword());
+        users.setUserEmail(registrationRequest.getUserEmail());
+
+//        List<Address> addresses = userDTO.getAddresses().stream()
+//                //.map(addressDTO -> AddressModelMapper.mapToAddress(addressDTO))writing it to method reference
+//                .map(AddressModelMapper::mapToAddress)//Method reference
+//                .collect(Collectors.toList());
+//
+//        addresses.forEach(address -> address.setUserInfo(users));
+//        users.setAddresses(addresses);
+
+        return users;
+    }
+
 }

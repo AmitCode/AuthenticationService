@@ -3,6 +3,8 @@ package com.intoThe.service.impl;
 import com.intoThe.dto.UserDTO;
 import com.intoThe.dto.request.EmailRequest;
 import com.intoThe.dto.request.PasswordResetRequest;
+import com.intoThe.dto.request.UserRegistrationRequest;
+import com.intoThe.dto.request.UserUpdateRequest;
 import com.intoThe.dto.response.AuthenticationServiceResponse;
 import com.intoThe.dto.response.EmailServiceResponse;
 import com.intoThe.entities.EntityVerificationToken;
@@ -170,21 +172,21 @@ public class UserServiceImpl implements UserService {
 
 @Override
 @Transactional
-public ResponseEntity<?> addUser(UserDTO userDTO) {
+public ResponseEntity<?> addUser(UserRegistrationRequest registrationRequest) {
 
-    if(UserUtils.isUserNameAlreadyExist(userDTO.getUserName(), userRepository)){
+    if(UserUtils.isUserNameAlreadyExist(registrationRequest.getUserName(), userRepository)){
         throw new UserNameAlreadyExist("User already exists with this username!...");
 
-    }else if (UserUtils.isUserExistWithEmail(userDTO.getUserEmail(), userRepository)){
+    }else if (UserUtils.isUserExistWithEmail(registrationRequest.getUserEmail(), userRepository)){
         throw new EmailIdAlreadyExist("User already exists with the Email!...");
 
     }else {
         try {
 
-            userDTO.setUserPassword(passwordEncoder.encode(userDTO.getUserPassword()));
+            registrationRequest.setUserPassword(passwordEncoder.encode(registrationRequest.getUserPassword()));
 
-            Users mappedUser = UserDataModelMapper.mapToUser(userDTO);
-            mappedUser.setCreatedBy(userDTO.getUserName());
+            Users mappedUser = UserDataModelMapper.mapToUser(registrationRequest);
+            mappedUser.setCreatedBy(registrationRequest.getUserName());
             Users newUser = userRepository.save(mappedUser);
 
             String token = VerificationTokenUtils.generateVerificationToken();
@@ -225,12 +227,11 @@ public ResponseEntity<?> addUser(UserDTO userDTO) {
      */
     @Transactional
     @Override
-    public String updateUser(UserDTO userDTO){
+    public String updateUser(UserUpdateRequest updateRequest){
 
-        String userName = userDTO.getUserName();
+        String userName = updateRequest.getUserName();
         Users users = UserUtils.isUserExist(userName,userRepository);
-        users.setUserName(userDTO.getUserName());
-        users.setIsUserActive(userDTO.getIsUserActive());
+        users.setUserName(updateRequest.getUserName());
         users.setUpdatedBy(userName);
         users = userRepository.save(users);
 
