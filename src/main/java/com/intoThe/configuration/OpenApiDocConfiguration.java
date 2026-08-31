@@ -25,9 +25,9 @@ import org.springframework.context.annotation.Configuration;
                 description = "Authentication Service",
                 variables = {
                         @ServerVariable(
-                                name = "environment",
-                                defaultValue = "dev",
-                                allowableValues = {"local", "dev", "qa", "prod"}
+                                name = "Environment",
+                                defaultValue = "DEV",
+                                allowableValues = {"LOCAL", "DEV", "QA", "PROD"}
                         )
                 }
         ),
